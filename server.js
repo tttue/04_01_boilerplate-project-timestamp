@@ -30,16 +30,16 @@ app.get("/api/hello", function (req, res) {
 // Main
 app.get("/api/timestamp/:date_string?", function (req, res) {
 	var date = new Date();
-	if (req.params.date_string) {
-		var date_string = req.params.date_string;
-		if (date_string[4]=="-" && date_string[7]=="-"){
-		} else {
-			date_string = parseInt(date_string)*1000;
-		}
+	let checkS = /^[0-9]*$/;
+	var date_string = req.params.date_string
+	if (checkS.test(date_string)) {
+		date_string = parseInt(date_string)*1000;
+		date = new Date(date_string);
+	} else {
 		date = new Date(date_string);
 	}
-	if (typeof date==="string"){
-		res.json({ error: date });
+	if (date=="Invalid Date"){
+		res.json({ error: "Invalid Date" });
 	}else {
 		res.json({ "unix": date.getTime(), "utc": date.toUTCString() });
 	}
