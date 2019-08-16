@@ -2,12 +2,13 @@
 // where your node app starts
 /*
 	npm install express cors
+	Date Invalid : https://qiita.com/muddydixon/items/2edf6dcb84295eccf4f3
 */
 
 // init project
 var express = require('express');
 var app = express();
-
+var tools =  require('./tools.js');
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC
 var cors = require('cors');
@@ -31,14 +32,14 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/timestamp/:date_string?", function (req, res) {
 	var date = new Date();
 	let checkS = /^[0-9]*$/;
-	var date_string = req.params.date_string
+	var date_string = req.params.date_string;
 	if (checkS.test(date_string)) {
 		date_string = parseInt(date_string)*1000;
 		date = new Date(date_string);
 	} else {
-		date = new Date(date_string);
+		date = new Date(tools.refineDateString(date_string));
 	}
-	if (date=="Invalid Date"){
+	if (isNaN(date.getTime())){
 		res.json({ error: "Invalid Date" });
 	}else {
 		res.json({ "unix": date.getTime(), "utc": date.toUTCString() });
