@@ -1,7 +1,8 @@
 // server.js
 // where your node app starts
 /*
-	npm install express cors
+	npm ln express
+	npm ln cors
 	Date Invalid : https://qiita.com/muddydixon/items/2edf6dcb84295eccf4f3
 */
 
